@@ -1,6 +1,7 @@
 package com.projects.tinyurl.service;
 
 import com.projects.tinyurl.entity.UrlMapping;
+import com.projects.tinyurl.exception.UrlNotFoundException;
 import com.projects.tinyurl.repository.UrlRepository;
 import com.projects.tinyurl.util.Base62Encoder;
 import org.hibernate.dialect.function.DB2SubstringFunction;
@@ -36,7 +37,7 @@ public class UrlService {
     // STEP 2: Get original URL
     public String getLongUrl(String shortCode) {
         UrlMapping mapping = urlRepository.findByShortCode(shortCode)
-                .orElseThrow(() -> new RuntimeException("Short URL not found"));
+                .orElseThrow(() -> new UrlNotFoundException("Short URL not found"));
 
         return mapping.getLongUrl();
     }

@@ -1,6 +1,8 @@
 package com.projects.tinyurl.controller;
 
+import com.projects.tinyurl.dto.ShortenUrlRequest;
 import com.projects.tinyurl.service.UrlService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +20,8 @@ public class UrlController {
     }
 
     @PostMapping("/api/shorten")
-    public ResponseEntity<String> shortenUrl(@RequestBody Map<String, String> request) {
-        String longUrl = request.get("longUrl");
+    public ResponseEntity<String> shortenUrl(@Valid  @RequestBody ShortenUrlRequest request) {
+        String longUrl = request.getLongUrl();
         String shortCode = urlService.createShortUrl(longUrl);
 
         String shortUrl = "http://localhost:8085/" + shortCode;
